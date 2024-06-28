@@ -56,3 +56,57 @@ eurInput.oninput = () => {
     }
 }
 
+
+
+const load = fetch(`https://jsonplaceholder.typicode.com/posts`)
+    .then((response) => response.json())
+    .then((data) => {
+        console.log(data);
+    })
+
+
+
+
+const card = document.querySelector('.card')
+const next = document.querySelector('#btn-next')
+const prev = document.querySelector('#btn-prev')
+const ending = 200
+const start = 1
+let currentUser = 1
+let first = currentUser
+
+const one = fetch (`https://jsonplaceholder.typicode.com/todos/${first}`)
+    .then((response) => response.json())
+    .then((data) => {
+        card.innerHTML = `
+        <p>${data.title}</p>
+        <p> id: ${data.id}</p>
+        `
+    })
+function loadUser(userId) {
+    fetch(`https://jsonplaceholder.typicode.com/todos/${userId}`)
+        .then((response) => response.json())
+        .then((data) => {
+            card.innerHTML = `
+                <p>${data.title}</p>
+                <p>id: ${data.id}</p>
+            `;
+        });
+}
+    
+function updateUser(increment) {
+    currentUser += increment;
+    if (currentUser > ending) {
+            currentUser = start;
+    } else if (currentUser < start) {
+        currentUser = ending;
+    }
+    loadUser(currentUser);
+}
+    
+loadUser(currentUser);
+    
+next.onclick = () => updateUser(1);
+prev.onclick = () => updateUser(-1);
+
+
