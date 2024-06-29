@@ -171,3 +171,12 @@
 hr {
     width: 100%;
 }
+.buttonSwitcher{
+    width: 105px;
+    padding: 1%;
+    background-color: black;
+    color: orange;
+    border: solid 1px orange;
+    border-radius: 10px;
+    cursor: pointer;
+}

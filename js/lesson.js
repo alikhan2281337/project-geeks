@@ -83,30 +83,42 @@ const one = fetch (`https://jsonplaceholder.typicode.com/todos/${first}`)
         <p> id: ${data.id}</p>
         `
     })
-function loadUser(userId) {
-    fetch(`https://jsonplaceholder.typicode.com/todos/${userId}`)
-        .then((response) => response.json())
-        .then((data) => {
-            card.innerHTML = `
-                <p>${data.title}</p>
-                <p>id: ${data.id}</p>
-            `;
-        });
+async function loadUser(userId) {
+    
+    try {
+        await fetch(`https://jsonplaceholder.typicode.com/todos/${userId}`)
+            .then((response) => response.json())
+            .then((data) => {
+                card.innerHTML = `
+                    <p>${data.title}</p>
+                    <p>id: ${data.id}</p>
+                `;
+            });
+        }catch (error){
+            console.error('Error fetching data: ', error);
+        }
 }
     
 function updateUser(increment) {
     currentUser += increment;
-    if (currentUser > ending) {
-            currentUser = start;
-    } else if (currentUser < start) {
-        currentUser = ending;
-    }
-    loadUser(currentUser);
+        if (currentUser > ending) {
+                currentUser = start;
+        } else if (currentUser < start) {
+            currentUser = ending;
+        }
+        loadUser(currentUser);
+    
 }
     
 loadUser(currentUser);
     
 next.onclick = () => updateUser(1);
 prev.onclick = () => updateUser(-1);
+
+
+const buttons = document.querySelector('.buttonSwitcher')
+buttons.onclick = () => {
+    window.location.href = '../pages/cards.html'
+}
 
 
